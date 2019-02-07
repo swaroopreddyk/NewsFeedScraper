@@ -1,5 +1,19 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const mongoose = require('mongoose'); 
+const db = require("../models"); 
+
+mongoose.Promise = Promise; 
+mongoose.connect(process.env.MONGODB_URI || "mongodb://heroku_wqt0jvbj:pii6es1pthmm5kp94gpl2ooie@ds225205.mlab.com:25205/heroku_wqt0jvbj", { 
+useNewUrlParser: true 
+});
+
+const mongooseConnection = mongoose.connection;
+
+mongooseConnection.on('error', console.error.bind(console, 'connection error:'));
+mongooseConnection.once('open', function() {
+  console.log(`Sucessfully Connected to Mongo DB !`); 
+});
 
 module.exports = (app) => { 
     app.get("/", (req, res) => {
